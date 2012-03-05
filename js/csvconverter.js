@@ -41,31 +41,32 @@ _.extend(Member.prototype, {
     if(_.isArray(entry) 
       && 25 == entry.length
       && "Timestamp" != entry[0]) {
+      this.updatedAt = this._getUpdatedAt();
       this.valid = true;
       this.rawEntry = entry;
-      this.name = entry[1];
-      this.loc = entry[2];
+      this.name = this._convertText(entry[1]);
+      this.loc = this._convertText(entry[2]);
       this.contact = this._parseContact(entry[3]);
-      this.picture = entry[4];
-      this.video = entry[5];
-      this.cv = entry[6];
-      this.endorse = entry[7];
-      this.whyCollab = entry[8];
-      this.pressingWorldIssues = entry[9];
-      this.moreInvolved = entry[10];
-      this.whatIsMissing = entry[11];
-      this.suggestedImprovements = entry[12];
-      this.skills = entry[13];
-      this.howHaveYouContributed = entry[14];
-      this.whatDoYouWantToDo = entry[15];
-      this.canYouVolunteer = entry[16];
-      this.workForPay = entry[17];
-      this.interestedInVisit = entry[18];
-      this.interestedInPurchase = entry[19];
-      this.interestedInBidding = entry[20];
-      this.trueFan = entry[21];
-      this.fullTime = entry[22];
-      this.community = entry[24];
+      this.picture = this._convertText(entry[4]);
+      this.video = this._convertText(entry[5]);
+      this.cv = this._convertText(entry[6]);
+      this.endorse = this._convertText(entry[7]);
+      this.whyCollab = this._convertText(entry[8]);
+      this.pressingWorldIssues = this._convertText(entry[9]);
+      this.moreInvolved = this._convertText(entry[10]);
+      this.whatIsMissing = this._convertText(entry[11]);
+      this.suggestedImprovements = this._convertText(entry[12]);
+      this.skills = this._convertText(entry[13]);
+      this.howHaveYouContributed = this._convertText(entry[14]);
+      this.whatDoYouWantToDo = this._convertText(entry[15]);
+      this.canYouVolunteer = this._convertText(entry[16]);
+      this.workForPay = this._convertText(entry[17]);
+      this.interestedInVisit = this._convertText(entry[18]);
+      this.interestedInPurchase = this._convertText(entry[19]);
+      this.interestedInBidding = this._convertText(entry[20]);
+      this.trueFan = this._convertText(entry[21]);
+      this.fullTime = this._convertText(entry[22]);
+      this.community = this._convertText(entry[24]);
     }
   },
 
@@ -76,7 +77,25 @@ _.extend(Member.prototype, {
   _parseContact: function(rawContact) {
     rawContact || (rawContact = '');
     return rawContact.replace(/@/g, ' (at) ').replace(/\./g, ' (dot) ');
-  }
+  },
+
+  _convertText: function(rawText) {
+    rawText || (rawText = '');
+    return rawText.replace(/\n/g, _.escape('\n<br />'));
+  },
+
+  _getUpdatedAt: function() {
+    var d = new Date();
+    return this._monthNames[d.getMonth()] 
+      + ' ' + d.getDate()
+      + ', ' + d.getFullYear();
+  },
+
+  _monthNames: [ "January", "February", "March",
+                 "April", "May", "June",
+                 "July", "August", "September",
+                 "October", "November", "December"
+  ]
 });
 
 
