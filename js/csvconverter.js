@@ -75,7 +75,7 @@ _.extend(Member.prototype, {
 
   _parseContact: function(rawContact) {
     rawContact || (rawContact = '');
-    return rawContact.replace('@', ' (at) ').replace('.', ' (dot) ');
+    return rawContact.replace(/@/g, ' (at) ').replace(/\./g, ' (dot) ');
   }
 });
 
