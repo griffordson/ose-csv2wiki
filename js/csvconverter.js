@@ -81,7 +81,7 @@ _.extend(Member.prototype, {
 
   _convertText: function(rawText) {
     rawText || (rawText = '');
-    return rawText.replace(/\n/g, _.escape('\n<br />'));
+    return rawText.trim().replace(/\n/g, _.escape('\n<br />'));
   },
 
   _getUpdatedAt: function() {
