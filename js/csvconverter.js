@@ -12,7 +12,7 @@ $(function(){
       return;
     }
     var csvData = CSVToArray(csvVal, ',');
-    var template = _.template($('#wiki-template').html());
+    var template = getSelectedTemplate();
 
     /*
     _.each(csvData[0], function(h, i) {
@@ -21,7 +21,7 @@ $(function(){
     */
 
     _.each(csvData, function(entry) {
-      var member = new Member(entry);
+      var member = new Member(entry, $('#type').val());
       // console.log('member', member.isValid());
       if(member.isValid()) {
         $('#wiki').append(template(member));
@@ -31,17 +31,24 @@ $(function(){
   });
 });
 
+function getSelectedTemplate() {
+  var id = '#wiki-template-' + $('#type').val();
+  var el = $(id);
+  // console.log('getSelectedTemplate', id, el);
+  return _.template(el.html());
+}
+
 var Member = function(entry) {
   this.initialize.apply(this, arguments);
 };
 
 _.extend(Member.prototype, {
-  initialize: function(entry) {
+  initialize: function(entry, region) {
     this.valid = false;
     if(_.isArray(entry) 
-      && 25 == entry.length
+      && (('us' == region && entry.length == 25) || ('eu' == region && entry.length >= 25)) 
       && "Timestamp" != entry[0]) {
-      this.updatedAt = this._getUpdatedAt();
+      this.updatedAt = this._getUpdatedAt(region);
       this.valid = true;
       this.rawEntry = entry;
       this.name = this._convertText(entry[1]);
@@ -54,6 +61,7 @@ _.extend(Member.prototype, {
       this.whyCollab = this._convertText(entry[8]);
       this.pressingWorldIssues = this._convertText(entry[9]);
       this.moreInvolved = this._convertText(entry[10]);
+      this.whatDoYouLikeEU = this._convertText(entry[10]);
       this.whatIsMissing = this._convertText(entry[11]);
       this.suggestedImprovements = this._convertText(entry[12]);
       this.skills = this._convertText(entry[13]);
@@ -63,10 +71,19 @@ _.extend(Member.prototype, {
       this.workForPay = this._convertText(entry[17]);
       this.interestedInVisit = this._convertText(entry[18]);
       this.interestedInPurchase = this._convertText(entry[19]);
+      this.interestedInCommunityEU = this._convertText(entry[19]);
       this.interestedInBidding = this._convertText(entry[20]);
       this.trueFan = this._convertText(entry[21]);
       this.fullTime = this._convertText(entry[22]);
       this.community = this._convertText(entry[24]);
+      this.moreInvolvedEU = this._convertText(entry[25]);
+      this.interestedInBuildingEU = this._convertText(entry[26]);
+      this.trueFanEU = this._convertText(entry[27]);
+      this.fullTimeEU = this._convertText(entry[28]);
+      this.whatFriendsDoingWorkEU = this._convertText(entry[30]);
+      this.techNeedsCommunityEU = this._convertText(entry[31]);
+      this.areFriendsWorkingEU = this._convertText(entry[32]);
+
     }
   },
 
@@ -84,11 +101,17 @@ _.extend(Member.prototype, {
     return rawText.trim().replace(/\n/g, _.escape('\n<br />'));
   },
 
-  _getUpdatedAt: function() {
+  _getUpdatedAt: function(region) {
     var d = new Date();
-    return this._monthNames[d.getMonth()] 
-      + ' ' + d.getDate()
-      + ', ' + d.getFullYear();
+    if('us' == region)
+      return this._monthNames[d.getMonth()] 
+        + ' ' + d.getDate()
+        + ', ' + d.getFullYear();
+    else
+      return d.getDate()
+        + '. ' + this._monthNames[d.getMonth()]
+        + ', ' + d.getFullYear()
+        + '.';
   },
 
   _monthNames: [ "January", "February", "March",

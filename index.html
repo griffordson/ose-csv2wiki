@@ -2,17 +2,22 @@
 <html>
   <head>
     <title>Convert Team Culturing CSV to Wiki Code</title>
+    <script type="text/javascript" src="js/jquery-1.7.1.js"></script> 
   </head>
   <body>
     <div>
       Convert Team Culturing CSV to Wiki Code
+      <select id="type">
+        <option value="us">US</option>
+        <option value="eu">EU</option>
+      </select>
       <button id="convert-button">Convert</button>
     </div>
     <div>
       <textarea rows="30" cols="60" id="csv"></textarea>
       <textarea rows="30" cols="60" id="wiki"></textarea>
     </div>
-    <script type="text/template" id="wiki-template">[[Image:myfotofile.jpg|thumb|<%= name %>]]
+    <script type="text/template" id="wiki-template-us">[[Image:myfotofile.jpg|thumb|<%= name %>]]
 
 ==Team Culturing Information==
 Last updated: <%= updatedAt %>      
@@ -83,7 +88,89 @@ Last updated: <%= updatedAt %>
 
 [[Category: Team Culturing]]
 </script>
-    <script type="text/javascript" src="js/jquery-1.7.1.js"></script> 
+<script type="text/template" id="wiki-template-eu">{{InternalWikiCommunication|<%= name %>}}
+[[Image:image.jpg|thumb|<%= name %>]]
+
+==Team Culturing Information==
+
+last Updated: <%= updatedAt %>
+
+==='''WHO''' are you?===
+*''Name'' - <%= name %>
+*''Location (city, country)'' - <%= loc %>
+*''Contact Information (email, skype, phone)'' - <%= contact %>
+*''Introduction Video'' - <%= video %>
+*''Resume/CV'' - <%= cv %>
+
+==='''WHY''' are you motivated to support/develop this work?===
+*''Do you support open source culture?''
+<%= endorse %>
+
+*''Why are you interested in collaborating with us?''
+<%= whyCollab %>
+
+*''How do you think that the GVCS and Open Source Hardware can address pressing world issues?''
+<%= pressingWorldIssues %>
+
+*''What do you like in OSE Europe?''
+<%= whatDoYouLikeEU %>
+
+*''What should happen so that you become more involved with OSE Europe?''
+<%= moreInvolvedEU %>
+
+*''What is missing in OSE Europe?''
+<%= whatIsMissing %>
+
+*''What are your suggestions for improvement in OSE Europe?''
+<%= suggestedImprovements %>
+
+==='''WHAT''' are your skills?===
+
+*'''List all of your skills in these areas: Communications - Organizational - Computer Support - Finances - Design - Natural Building - Electronics - Automation - Metallurgy - Engineering - Fabrication - Agriculture - Energy - Architecture - Video/Graphics/Art - PR/Marketing - Education - Construction - Industry - CNC - Chemistry - Product Design - Other'''
+<%= skills %>
+
+*''How have you already contributed to OSE, OSE Europe and Open Source Hardware?''
+<%= howHaveYouContributed %>
+
+===HOW can you help?===
+
+*''How do you want to contribute?''
+<%= whatDoYouWantToDo %>
+
+*''Can you volunteer to work with us, and if so, how many hours per week? Or do you have a free timeframe (week, month)? ''
+<%= canYouVolunteer %>
+
+*''Are you interested in working with us for pay? If so, what services can you offer, and what is your hourly or per-project rate?''
+<%= workForPay %>
+
+*''Are you interested in being part of one of the OSE communities in Europe? If so in which country?''
+<%= interestedInCommunityEU %>
+
+*''Are you interested in a Dedicated Project Visit in OSE Communities in Europe? If so in which country?''
+<%= interestedInVisit %>
+
+*''Are you interested in building GVCS or other Open Source Hardware equipment in Europe? If so which ones?''
+<%= interestedInBuildingEU %>
+
+*''Are you an OSE [[True Fans|True Fan]]?''
+<%= trueFanEU %>
+
+*''Would you like to see yourself working with us on a full-time basis?''
+<%= fullTimeEU %>
+
+===Your Friends and Community===
+
+*''What friends, people, communities and organizations do you know who are already doing valuable work for a better future? For example: open source hardware/software, sustainable agriculture, natural building, renewable energy, abundance based economies, local production or others?''
+<%= whatFriendsDoingWorkEU %>
+
+*''What are the technological (machines, tools, structures, ...) and biological (people, animals, plants, ...) needs of your community so that it becomes self-sufficient locally and globally connected?''
+<%= techNeedsCommunityEU %>
+
+*''Are your friends and community doing valuable work for a better future? How can they become more involved in this process and share more with everyone?''
+<%= areFriendsWorkingEU %>
+
+[[Category:Team Culturing Europe]]</script>
+    
     <script type="text/javascript" src="js/underscore.js"></script> 
     <script type="text/javascript" src="js/csvconverter.js"></script> 
   </body>
