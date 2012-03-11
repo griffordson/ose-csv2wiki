@@ -20,13 +20,17 @@ $(function(){
     });
     */
 
+    var text = '';
+
     _.each(csvData, function(entry) {
       var member = new Member(entry, $('#type').val());
       // console.log('member', member.isValid());
       if(member.isValid()) {
-        $('#wiki').append(template(member));
+        text += template(member);
       }
     });
+
+    $('#wiki').text(text);
 
   });
 });
@@ -98,7 +102,7 @@ _.extend(Member.prototype, {
 
   _convertText: function(rawText) {
     rawText || (rawText = '');
-    return rawText.trim().replace(/\n/g, _.escape('\n<br />'));
+    return rawText.trim().replace(/\n/g, '\n<br />');
   },
 
   _getUpdatedAt: function(region) {
